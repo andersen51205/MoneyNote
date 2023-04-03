@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+// 套件引入
 import './bootstrap';
 import { createApp } from 'vue';
 
