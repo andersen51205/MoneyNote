@@ -1,77 +1,89 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-md">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="col-11 col-md-8 col-lg-6 col-xl-5 bg-white rounded-4 px-md-5 py-4">
+            <form method="POST" action="{{ route('register') }}" id="Form_register" class="mx-4 my-3">
+                <div class="text-center">
+                    <h1>註冊帳號</h1>
                 </div>
-            </div>
+                <div class="mt-3">
+                    <span class="d-block mb-1">使用者名稱</span>
+                    <input type="text" class="form-control py-2 necessary" name="name" max="20">
+                </div>
+                <div class="mt-3">
+                    <span class="d-block mb-1">電子郵件</span>
+                    <input type="email" class="form-control py-2 necessary" name="email">
+                </div>
+                <div class="mt-3">
+                    <span class="d-block mb-1">密碼</span>
+                    <input type="password" class="form-control py-2 necessary" name="password">
+                </div>
+                <div class="mt-3">
+                    <span class="d-block mb-1">確認密碼</span>
+                    <input type="password" class="form-control py-2 necessary" name="password_confirmation">
+                </div>
+                <div class="d-flex justify-content-between my-3">
+                    <div class="d-inline-block necessaryCheckbox">
+                        <input type="checkbox" id="Checkbox_agree_terms" class="form-check-input"
+                            name="agree_terms" tabindex="-1" checked>
+                        <label class="form-check-label ms-1" for="Checkbox_agree_terms">我同意服務條款</label>
+                    </div>
+                    <div class="d-inline-block">
+                        <span>已經有帳號了嗎？<a href="{{ route('login.form') }}" tabindex="-1">登入</a></span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-lg btn-secondary rounded-pill px-5 my-3"
+                        onclick="formSubmit()">
+                    註冊
+                </button>
+            </form>
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    // 頁面初始化
+    window.onload = function() {
+        // 自動聚焦
+        document.querySelector('input[name=name]').focus();
+    }
+    // 表單提交
+    function formSubmit() {
+        UtilSwal.formSubmit(function (){
+            const form = document.querySelector('#Form_register');
+            let postData = new FormData(form);
+            
+            axios({
+                url: "{{ route('register') }}",
+                method: 'POST',
+                data: postData,
+            }).then(function (response) {
+                // handle success
+                const code = response.status;
+                const respJson = response.data;
+                if(respJson.message === 'redirect') {
+                    location.href = respJson.data;
+                }
+                else {
+                    UtilSwal.showSuccess(respJson.message);
+                }
+            }).catch(function (error) {
+                // handle error
+                const code = error.response.status;
+                const respJson = error.response.data;
+                if(code === 422) {
+                    UtilSwal.showError(respJson.message);
+                }
+                else {
+                    UtilSwal.showError();
+                    console.log(error);
+                }
+            });
+        });
+    }
+</script>
 @endsection
