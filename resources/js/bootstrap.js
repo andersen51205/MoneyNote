@@ -14,6 +14,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import 'sweetalert2/src/sweetalert2.scss';
 import Swal from 'sweetalert2'
 window.Swal = Swal;
+import './utility/swal';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
