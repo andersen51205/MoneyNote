@@ -49,7 +49,11 @@ class PasswordController extends Controller
             'email.required' => '電子郵件 為必填欄位',
             'email.email' => '電子郵件 格式不正確'
         ]);
-        // 寄送密碼重設信
+        /**
+         * 寄送密碼重設信
+         * expireTime   -> config('auth.passwords.users.expire')
+         * throttleTime -> config('auth.passwords.users.throttle')
+         */
         $status = Password::sendResetLink(
             $request->only('email')
         );
@@ -61,6 +65,10 @@ class PasswordController extends Controller
         elseif($status === 'passwords.sent') {
             $code = 200;
             $message = '密碼重設信已發送';
+        }
+        elseif($status === 'passwords.throttled') {
+            $code = 429;
+            $message = '發送太過頻繁，請稍後再試';
         }
         else {
             $code = 500;

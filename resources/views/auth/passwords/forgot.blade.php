@@ -59,8 +59,8 @@
         }).catch(function (error) {
             // handle error
             const code = error.response.status;
-            const respJson = error.response.data;
-            if(code === 404 || code === 422) {
+            const respJson = error.response.data;            
+            if(code === 404 || code === 422 || code === 429) {
                 UtilSwal.showError(respJson.message);
             }
             else {
