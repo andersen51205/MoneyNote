@@ -1,3 +1,6 @@
+/**
+ *  Bootstrap 套件引入
+ */
 import 'bootstrap';
 
 /**
@@ -7,6 +10,7 @@ import 'bootstrap';
 import axios from 'axios';
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+import './utility/ajax';
 
 /**
  *  Sweet Alert 套件引入與設置
