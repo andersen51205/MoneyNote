@@ -54,17 +54,7 @@
                 const code = response.status;
                 const respJson = response.data;
                 if(respJson.message && respJson.redirect) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: title,
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: '確定',
-                        allowOutsideClick: false,
-                    }).then(result => {
-                        if (result.isConfirmed) {
-                            location.href = href;
-                        }
-                    });
+                    UtilSwal.showRedirectMessage(respJson.message, respJson.redirect);
                 }
                 else if(respJson.redirect) {
                     location.href = respJson.redirect;
