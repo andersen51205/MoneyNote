@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 class PasswordController extends Controller
 {
@@ -90,6 +88,63 @@ class PasswordController extends Controller
      */
     public function resetForm(Request $request, $token)
     {
-        dd($token);
+        // Response
+        return view('auth.passwords.reset', [
+            'token' => $token
+        ]);
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function reset(Request $request)
+    {
+        // 表單驗證
+        $validated = $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|min:8|max:20|confirmed',
+        ], [
+            'email.required' => '電子郵件 為必填欄位',
+            'email.email' => '電子郵件 格式不正確',
+            'password.required' => '密碼 為必填欄位',
+            'password.min' => '密碼至少8個字',
+            'password.max' => '密碼最多20個字',
+            'password.confirmed' => '確認密碼不相同',
+        ]);
+        // 密碼重設
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, $password) {
+                // 更新密碼
+                $user->password = Hash::make($password);
+                $user->remember_token = NULL;
+                $user->save();
+            }
+        );
+        // 回傳資料
+        $json = [];
+        if($status === 'passwords.reset') {
+            $code = 200;
+            $json['message'] = '密碼重設成功，請使用新密碼登入';
+            $json['redirect'] = route('login');
+        }
+        elseif($status === 'passwords.token') {
+            $code = 422;
+            $json['message'] = '重設密碼已過期，請重新發送密碼重設信';
+        }
+        elseif($status === 'passwords.user') {
+            $code = 404;
+            $json['message'] = '電子郵件 輸入錯誤';
+        }
+        else {
+            $code = 500;
+            $json['message'] = '發生錯誤，請稍候再試';
+        }
+        // Response
+        return response()->json($json, $code);
     }
 }

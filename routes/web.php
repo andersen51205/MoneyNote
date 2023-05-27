@@ -29,5 +29,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/password/forgot', [PasswordController::class, 'forgotForm'])->name('password.forgot.form');
 Route::post('/password/forgot', [PasswordController::class, 'sendEmail'])->name('password.send.email');
 Route::get('/password/reset/{token}', [PasswordController::class, 'resetForm'])->name('password.reset.form');
+Route::post('/password/reset', [PasswordController::class, 'reset'])->name('password.reset');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
