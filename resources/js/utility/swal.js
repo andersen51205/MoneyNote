@@ -71,4 +71,18 @@ window.UtilSwal = {
             },
         });
     },
+    // 確認後跳轉頁面
+    showRedirectMessage: function(title = '', href = '/') {
+        Swal.fire({
+            icon: 'success',
+            title: title,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '確定',
+            allowOutsideClick: false,
+        }).then(result => {
+            if (result.isConfirmed) {
+                location.href = href;
+            }
+        });
+    },
 }
