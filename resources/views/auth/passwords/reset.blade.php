@@ -41,39 +41,13 @@
     }
     // 表單提交
     function formSubmit() {
-        UtilSwal.formSubmit(function (){
+        UtilSwal.formSubmit(function () {
+            const route = "{{ route('password.reset') }}";
+            const method = "POST";
             const form = document.querySelector('#Form_reset_password');
             let postData = new FormData(form);
             
-            axios({
-                url: "{{ route('password.reset') }}",
-                method: 'POST',
-                data: postData,
-            }).then(function (response) {
-                // handle success
-                const code = response.status;
-                const respJson = response.data;
-                if(respJson.message && respJson.redirect) {
-                    UtilSwal.showRedirectMessage(respJson.message, respJson.redirect);
-                }
-                else if(respJson.redirect) {
-                    location.href = respJson.redirect;
-                }
-                else {
-                    UtilSwal.showSuccess(respJson.message);
-                }
-            }).catch(function (error) {
-                // handle error
-                const code = error.response.status;
-                const respJson = error.response.data;
-                if(/^4/.test(code)) {
-                    UtilSwal.showError(respJson.message);
-                }
-                else {
-                    UtilSwal.showError();
-                    console.log(error);
-                }
-            });
+            UtilAjax.formSubmit(route, method, postData);
         });
     }
 </script>

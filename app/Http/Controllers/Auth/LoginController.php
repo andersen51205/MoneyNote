@@ -69,8 +69,7 @@ class LoginController extends Controller
         $request->session()->regenerate();
         // Response
         return response()->json([
-            'message' => 'redirect',
-            'data' => route('home')
+            'redirect' => route('home')
         ], 200);
     }
 

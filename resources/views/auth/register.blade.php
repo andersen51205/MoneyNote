@@ -53,36 +53,13 @@
     }
     // 表單提交
     function formSubmit() {
-        UtilSwal.formSubmit(function (){
+        UtilSwal.formSubmit(function () {
+            const route = "{{ route('register') }}";
+            const method = 'POST';
             const form = document.querySelector('#Form_register');
             let postData = new FormData(form);
             
-            axios({
-                url: "{{ route('register') }}",
-                method: 'POST',
-                data: postData,
-            }).then(function (response) {
-                // handle success
-                const code = response.status;
-                const respJson = response.data;
-                if(respJson.message === 'redirect') {
-                    location.href = respJson.data;
-                }
-                else {
-                    UtilSwal.showSuccess(respJson.message);
-                }
-            }).catch(function (error) {
-                // handle error
-                const code = error.response.status;
-                const respJson = error.response.data;
-                if(code === 422) {
-                    UtilSwal.showError(respJson.message);
-                }
-                else {
-                    UtilSwal.showError();
-                    console.log(error);
-                }
-            });
+            UtilAjax.formSubmit(route, method, postData);
         });
     }
 </script>

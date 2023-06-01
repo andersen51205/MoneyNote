@@ -39,35 +39,12 @@
     // 表單提交
     function formSubmit() {
         UtilSwal.showLoading();
+        const route = "{{ route('password.send.email') }}";
+        const method = "POST";
         const form = document.querySelector('#Form_forgot_password');
         let postData = new FormData(form);
         
-        axios({
-            url: "{{ route('password.send.email') }}",
-            method: 'POST',
-            data: postData,
-        }).then(function (response) {
-            // handle success
-            const code = response.status;
-            const respJson = response.data;
-            if(respJson.message === 'redirect') {
-                location.href = respJson.data;
-            }
-            else {
-                UtilSwal.showSuccess(respJson.message);
-            }
-        }).catch(function (error) {
-            // handle error
-            const code = error.response.status;
-            const respJson = error.response.data;            
-            if(code === 404 || code === 422 || code === 429) {
-                UtilSwal.showError(respJson.message);
-            }
-            else {
-                UtilSwal.showError();
-                console.log(error);
-            }
-        });
+        UtilAjax.formSubmit(route, method, postData);
     }
 </script>
 @endsection
