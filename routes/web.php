@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\User\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,10 @@ Route::post('/password/forgot', [PasswordController::class, 'sendEmail'])->name(
 Route::get('/password/reset/{token}', [PasswordController::class, 'resetForm'])->name('password.reset.form');
 Route::post('/password/reset', [PasswordController::class, 'reset'])->name('password.reset');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/**
+ * 使用者
+ */
+Route::middleware(['auth'])->group(function () {
+    // 首頁
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
