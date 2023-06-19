@@ -8,3 +8,54 @@ body {
     border-radius: 1.25rem;
     background-color: #ffffff;
 }
+
+/* 麵包屑 */
+.breadcrumbs {
+    margin-bottom: 1rem;
+    border: 1px solid #cbd2d9;
+    border-radius: 0.3rem;
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.breadcrumbs .item {
+    background: #fff;
+    color: #333;
+    outline: none;
+    padding: 0.4em 1.2em 0.4em 1.4em;
+    position: relative;
+    text-decoration: none;
+    transition: background 0.2s linear;
+}
+
+.breadcrumbs .item:hover:after,
+.breadcrumbs .item:hover {
+    background: #edf1f5;
+}
+
+.breadcrumbs .item:after,
+.breadcrumbs .item:before {
+    background: white;
+    bottom: 0;
+    clip-path: polygon(50% 50%, -50% -50%, 0 100%);
+    content: "";
+    left: 100%;
+    position: absolute;
+    top: 0;
+    transition: background 0.2s linear;
+    width: 1em;
+    z-index: 1;
+}
+
+.breadcrumbs .item:before {
+    background: #cbd2d9;
+    margin-left: 1px;
+}
+
+.breadcrumbs .item:last-child {
+    border-right: none;
+}
+
+.breadcrumbs .item.active {
+    background: #f0f0f0;
+}
