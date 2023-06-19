@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-md">
+<div class="container-md my-4">
     <div class="row justify-content-center">
         <div class="col-11 col-md-8 col-lg-6 col-xl-5 bg-white rounded-4 px-md-5 py-4">
             <form method="POST" action="{{ route('register') }}" id="Form_register" class="mx-4 my-3">

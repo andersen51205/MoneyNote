@@ -20,13 +20,13 @@
     ])
 </head>
 <body>
-    <div id="app">
-        @include('layouts.components._navbar')
-
-        <main class="my-4">
-            @yield('content')
-        </main>
-    </div>
+    <header>
+        {{-- 導航列 --}}
+        @include('layouts.components.navbar')
+    </header>
+    <main>
+        @yield('content')
+    </main>
     @yield('script')
 </body>
 </html>
