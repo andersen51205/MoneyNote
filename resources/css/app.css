@@ -1,3 +1,10 @@
 body {
     background: #ebebeb;
 }
+
+.content-page {
+    margin-top: 1rem;
+    padding: 1.25rem 2.5rem !important;
+    border-radius: 1.25rem;
+    background-color: #ffffff;
+}
