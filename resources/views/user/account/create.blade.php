@@ -57,9 +57,12 @@
                         </div>
                         {{-- 表單提交 --}}
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-lg btn-primary px-4" onclick="formSubmit()">
+                            <button type="button" class="btn btn-lg btn-primary px-4 mx-2" onclick="formSubmit()">
                                 送出
                             </button>
+                            <a class="btn btn-lg btn-secondary px-4 mx-2" href="{{ route('account.index') }}">
+                                返回
+                            </a>
                         </div>
                     </form>
                 </div>
