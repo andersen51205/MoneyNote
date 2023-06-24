@@ -43,4 +43,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account', [AccountController::class, 'index'])->name('account.index');
     Route::get('/account/create', [AccountController::class, 'create'])->name('account.create');
     Route::post('/account', [AccountController::class, 'store'])->name('account.store');
+    Route::get('/account/{id}/edit', [AccountController::class, 'edit'])->name('account.edit');
+    Route::patch('/account/{id}', [AccountController::class, 'update'])->name('account.update');
 });

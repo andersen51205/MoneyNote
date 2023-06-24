@@ -70,7 +70,18 @@ class AccountController extends Controller
      */
     public function edit(string $id)
     {
-        // 
+        // 取得資料
+        $account = Account::where('user_id', Auth::user()->id)
+            ->where('id', $id)
+            ->first();
+        // 檢查資料是否存在
+        if(!$account) {
+            abort(404);
+        }
+        // Response
+        return view('user.account.edit', [
+            'account' => $account
+        ]);
     }
 
     /**
@@ -78,7 +89,36 @@ class AccountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // 
+        // 表單驗證
+        $validated = $request->validate($this->validationRules());
+        // 取得原始資料
+        $accountData = Account::where('user_id', Auth::user()->id)
+            ->where('id', $id)
+            ->first();
+        if(!$accountData) {
+            return response()->json([
+                'message' => '更新失敗',
+            ], 404);
+        }
+        // 計算原始金額變化
+        $balance = $validated['amount'] - $accountData->amount + $accountData->balance;
+        // 資料處理
+        $updateData = [
+            'user_id' => Auth::user()->id,
+            'name' => $validated['name'],
+            'type' => $validated['type'],
+            'amount' => $validated['amount'],
+            'balance' => $balance,
+            'remark' => $validated['remark'],
+            'hidden' => $validated['hidden'] ?? 0,
+        ];
+        // 更新資料
+        $result = $accountData->update($updateData);
+        // Response
+        return response()->json([
+            'message' => '更新成功',
+            'redirect' => route('account.index'),
+        ], 200);
     }
 
     /**
