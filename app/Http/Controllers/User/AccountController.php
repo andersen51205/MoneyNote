@@ -3,20 +3,28 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Account;
+use App\Repositories\AccountRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
+    private $accountRepo;
+
+    public function __construct(
+        AccountRepository $accountRepo
+    )
+    {
+        $this->accountRepo = $accountRepo;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         // 取得資料
-        $accounts = Account::where('user_id', Auth::user()->id)
-            ->get();
+        $accounts = $this->accountRepo->getData();
         // Response
         return view('user.account.index', [
             'accounts' => $accounts,
@@ -49,7 +57,7 @@ class AccountController extends Controller
             'hidden' => $validated['hidden'] ?? 0,
         ];
         // 建立資料
-        $result = Account::create($createData);
+        $result = $this->accountRepo->createData($createData);
         // Response
         return response()->json([
             'message' => '新增成功',
@@ -71,9 +79,7 @@ class AccountController extends Controller
     public function edit(string $id)
     {
         // 取得資料
-        $account = Account::where('user_id', Auth::user()->id)
-            ->where('id', $id)
-            ->first();
+        $account = $this->accountRepo->getDataById($id);
         // 檢查資料是否存在
         if(!$account) {
             abort(404);
@@ -92,9 +98,7 @@ class AccountController extends Controller
         // 表單驗證
         $validated = $request->validate($this->validationRules());
         // 取得原始資料
-        $accountData = Account::where('user_id', Auth::user()->id)
-            ->where('id', $id)
-            ->first();
+        $accountData = $this->accountRepo->getDataById($id);
         if(!$accountData) {
             return response()->json([
                 'message' => '更新失敗',
@@ -113,7 +117,7 @@ class AccountController extends Controller
             'hidden' => $validated['hidden'] ?? 0,
         ];
         // 更新資料
-        $result = $accountData->update($updateData);
+        $result = $this->accountRepo->updateDataById($id, $updateData);
         // Response
         return response()->json([
             'message' => '更新成功',
@@ -127,9 +131,7 @@ class AccountController extends Controller
     public function destroy(Request $request, string $id)
     {
         // 取得要刪除的資料
-        $account = Account::where('user_id', Auth::user()->id)
-            ->where('id', $id)
-            ->first();
+        $account = $this->accountRepo->getDataById($id);
         // 檢查是否存在
         if(!$account) {
             return response()->json([
@@ -137,7 +139,7 @@ class AccountController extends Controller
             ], 404);
         }
         // 刪除資料
-        $result = $account->delete();
+        $result = $this->accountRepo->deleteDataById($account->id);
         // Response : 回傳204會使response為空，因此改為200
         return response()->json([
             'message' => '刪除成功',
