@@ -58,6 +58,30 @@ window.UtilSwal = {
             }
         });
     },
+    // 確認刪除
+    deleteSubmit: function(targetName = '', cb) {
+        const name = targetName ? `「${targetName}」` : '';
+        Swal.fire({
+            icon: 'warning',
+            title: `確定要刪除${name}嗎？`,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '確定',
+            showCancelButton: true,
+            cancelButtonText: '取消',
+        }).then(result => {
+            if (result.isConfirmed) {
+                UtilSwal.showLoading();
+                if(cb) {
+                    cb();
+                }
+                else {
+                    setTimeout(function () {
+                        UtilSwal.showError('抱歉，有東西出錯了');
+                    }, 250);
+                }
+            }
+        });
+    },
     // 等待 Loading 用
     showLoading: function() {
         Swal.fire({

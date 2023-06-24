@@ -45,4 +45,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/account', [AccountController::class, 'store'])->name('account.store');
     Route::get('/account/{id}/edit', [AccountController::class, 'edit'])->name('account.edit');
     Route::patch('/account/{id}', [AccountController::class, 'update'])->name('account.update');
+    Route::delete('/account/{id}', [AccountController::class, 'destroy'])->name('account.destroy');
 });

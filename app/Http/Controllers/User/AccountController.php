@@ -126,7 +126,23 @@ class AccountController extends Controller
      */
     public function destroy(Request $request, string $id)
     {
-        // 
+        // 取得要刪除的資料
+        $account = Account::where('user_id', Auth::user()->id)
+            ->where('id', $id)
+            ->first();
+        // 檢查是否存在
+        if(!$account) {
+            return response()->json([
+                'message' => '找不到',
+            ], 404);
+        }
+        // 刪除資料
+        $result = $account->delete();
+        // Response : 回傳204會使response為空，因此改為200
+        return response()->json([
+            'message' => '刪除成功',
+            'redirect' => route('account.index'),
+        ], 200);
     }
 
     /**

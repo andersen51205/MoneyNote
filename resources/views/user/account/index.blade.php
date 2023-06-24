@@ -68,4 +68,19 @@
 @endsection
 
 @section('script')
+<script>
+    function deleteAccount(el) {
+        const dataId = el.getAttribute('data-id');
+        const dataName = el.getAttribute('data-name');
+        if(dataId) {
+            UtilSwal.deleteSubmit(dataName, function () {
+                const route = "{{ route('account.destroy', 'ID') }}";
+                const method = 'DELETE';
+                let postData = {};
+                
+                UtilAjax.formSubmit(route.replace('ID', dataId), method, postData);
+            });
+        }
+    }
+</script>
 @endsection
