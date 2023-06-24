@@ -20,11 +20,12 @@
         <thead>
             <tr>
                 <th style="width:5%">#</th>
-                <th style="width:20%">名稱</th>
-                <th style="width:20%">餘額</th>
-                <th style="width:30%">備註</th>
-                <th style="width:10%">狀態</th>
-                <th style="width:15%">操作</th>
+                <th style="width:15%">名稱</th>
+                <th style="width:10%">種類</th>
+                <th style="width:10%">餘額</th>
+                <th style="width:39%">備註</th>
+                <th style="width:9%">狀態</th>
+                <th style="width:12%">操作</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,7 @@
                 <tr>
                     <td data-title="#">{{ $i+1 }}</td>
                     <td data-title="名稱">{{ $account->name }}</td>
+                    <td data-title="種類">{{ $types[$account->type] }}</td>
                     <td data-title="餘額">{{ $account->balance }}</td>
                     <td data-title="備註">{{ $account->remark }}</td>
                     <td data-title="狀態">
@@ -59,7 +61,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td class="text-center" colspan="6">無帳戶資料</td>
+                    <td class="text-center" colspan="7">無帳戶資料</td>
                 </tr>
             @endforelse
         </tbody>

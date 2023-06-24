@@ -25,9 +25,16 @@ class AccountController extends Controller
     {
         // 取得資料
         $accounts = $this->accountRepo->getData();
+        $types = [
+            1 => '現金',
+            2 => '儲值卡',
+            3 => '銀行',
+            4 => '信用卡',
+        ];
         // Response
         return view('user.account.index', [
             'accounts' => $accounts,
+            'types' => $types,
         ]);
     }
 
@@ -36,7 +43,17 @@ class AccountController extends Controller
      */
     public function create()
     {
-        return view('user.account.create');
+        // 取得資料
+        $types = [
+            1 => '現金',
+            2 => '儲值卡',
+            3 => '銀行',
+            4 => '信用卡',
+        ];
+        // Response
+        return view('user.account.create', [
+            'types' => $types,
+        ]);
     }
 
     /**
@@ -80,13 +97,20 @@ class AccountController extends Controller
     {
         // 取得資料
         $account = $this->accountRepo->getDataById($id);
+        $types = [
+            1 => '現金',
+            2 => '儲值卡',
+            3 => '銀行',
+            4 => '信用卡',
+        ];
         // 檢查資料是否存在
         if(!$account) {
             abort(404);
         }
         // Response
         return view('user.account.edit', [
-            'account' => $account
+            'account' => $account,
+            'types' => $types,
         ]);
     }
 

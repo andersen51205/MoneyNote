@@ -29,12 +29,10 @@
                         {{-- 帳戶種類 --}}
                         <div class="mb-3">
                             <label for="Select_type" class="form-label">種類</label>
-                            <select id="Select_type" class="form-select"
-                                    name="type" value="{{ $account->type }}">
-                                <option value="1">現金</option>
-                                <option value="2">儲值卡</option>
-                                <option value="3">銀行</option>
-                                <option value="4">信用卡</option>
+                            <select id="Select_type" class="form-select" name="type">
+                                @foreach ($types as $key => $type)
+                                    <option value="{{ $key }}" @selected($account->type === $key)>{{ $type }}</option>
+                                @endforeach
                             </select>
                         </div>
                         {{-- 初始金額 --}}
