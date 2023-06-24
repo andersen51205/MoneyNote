@@ -1,3 +1,179 @@
 body {
     background: #ebebeb;
 }
+
+.content-page {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem 2.5rem !important;
+    border-radius: 1.25rem;
+    background-color: #ffffff;
+}
+
+/* 麵包屑 */
+.breadcrumbs {
+    margin-bottom: 1rem;
+    border: 1px solid #cbd2d9;
+    border-radius: 0.3rem;
+    display: inline-flex;
+    overflow: hidden;
+}
+
+.breadcrumbs .item {
+    background: #fff;
+    color: #333;
+    outline: none;
+    padding: 0.4em 1.2em 0.4em 1.4em;
+    position: relative;
+    text-decoration: none;
+    transition: background 0.2s linear;
+}
+
+.breadcrumbs .item:hover:after,
+.breadcrumbs .item:hover {
+    background: #edf1f5;
+}
+
+.breadcrumbs .item:after,
+.breadcrumbs .item:before {
+    background: white;
+    bottom: 0;
+    clip-path: polygon(50% 50%, -50% -50%, 0 100%);
+    content: "";
+    left: 100%;
+    position: absolute;
+    top: 0;
+    transition: background 0.2s linear;
+    width: 1em;
+    z-index: 1;
+}
+
+.breadcrumbs .item:before {
+    background: #cbd2d9;
+    margin-left: 1px;
+}
+
+.breadcrumbs .item:last-child {
+    border-right: none;
+}
+
+.breadcrumbs .item.active {
+    background: #f0f0f0;
+}
+
+/* 表格 */
+.custom-table {
+    margin: 0;
+    width: 100%;
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); */
+    font-size: 1.2rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table tr {
+    background: #e9e9e9;
+}
+
+.custom-table tr:nth-of-type(odd) {
+    background: #f6f6f6;
+}
+
+.custom-table th {
+    font-weight: bold;
+    /* color: #ffffff; */
+    /* background: #ea6153; */
+    /* background: #27ae60; */
+    /* background: #2980b9; */
+    /* background: #4682B4; */
+    background: #cfe2ff;
+    /* background: #B0C4DE; */
+}
+
+.custom-table tr:last-child td:last-child {
+    border-width: 1px 1px 1px 1px;
+}
+
+@media screen and (min-width: 769px) {
+    /* 表格邊框:左+上 */
+    .custom-table th,
+    .custom-table td {
+        padding: 0.8rem 1.2rem;
+        border-width: 1px 0 0 1px;
+        border-style: solid;
+        border-color: #C0C0C0;
+    }
+    /* 表格圓角 */
+    .custom-table tr:first-child th:first-child {
+        border-top-left-radius: 1rem;
+    }
+    .custom-table tr:first-child th:last-child {
+        border-top-right-radius: 1rem;
+    }
+    .custom-table tr:last-child td:first-child {
+        border-bottom-left-radius: 1rem;
+    }
+    .custom-table tr:last-child td:last-child {
+        border-bottom-right-radius: 1rem;
+    }
+    /* 最後一列邊框:上下左 */
+    .custom-table tr:last-child td {
+        border-width: 1px 0px 1px 1px;
+    }
+    /* 最後一行邊框:上右左 */
+    .custom-table td:last-child,
+    .custom-table th:last-child {
+        border-width: 1px 1px 0px 1px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* 單行表格邊框:上右左 */
+    .custom-table td {
+        display: block;
+        padding: 0.5rem 0.75rem;
+        border-width: 1px 1px 0 1px;
+    }
+    /* 表格標題 */
+    .custom-table th {
+        display: none;
+    }
+    .custom-table td:before {
+        display: inline-block;
+        width: 20%;
+        /* color: #A0A0A0; */
+        color: #2980b9;
+        font-weight: bold;
+        content: attr(data-title);
+    }
+}
+
+/* 卡片表單 */
+.custom-card {
+    background-color: #ffffff;
+    border: 1px solid #C0C0C0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+.custom-card .header {
+    padding: 0.75rem;
+    background-color: #D6EAF8;
+    border-bottom: 1px solid #C0C0C0;
+}
+
+.custom-card .header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 0;
+}
+
+.custom-card .content {
+    padding: 1rem 1.5rem;
+}
+
+.custom-card .content label,
+.custom-card .content input,
+.custom-card .content select,
+.custom-card .content textarea {
+    font-size: 1.1rem;
+}

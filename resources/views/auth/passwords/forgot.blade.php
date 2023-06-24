@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-md">
+<div class="container-md my-4">
     <div class="row justify-content-center">
         <div class="col-11 col-md-8 col-lg-6 col-xl-5 bg-white rounded-4 mt-4 p-5">
             <form method="POST" action="{{ route('password.send.email') }}" id="Form_forgot_password" class="mx-2 mx-md-4">

@@ -17,6 +17,9 @@
         <div class="collapse navbar-collapse fs-5" id="navbarSupportedContent">
             {{-- 左側選單 --}}
             <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('account.index') }}">帳戶管理</a>
+                </li>
             </ul>
             {{-- 右側選單 --}}
             <ul class="navbar-nav ms-auto">

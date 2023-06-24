@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +33,17 @@ Route::post('/password/forgot', [PasswordController::class, 'sendEmail'])->name(
 Route::get('/password/reset/{token}', [PasswordController::class, 'resetForm'])->name('password.reset.form');
 Route::post('/password/reset', [PasswordController::class, 'reset'])->name('password.reset');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/**
+ * 使用者
+ */
+Route::middleware(['auth'])->group(function () {
+    // 首頁
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    // 帳戶管理
+    Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+    Route::get('/account/create', [AccountController::class, 'create'])->name('account.create');
+    Route::post('/account', [AccountController::class, 'store'])->name('account.store');
+    Route::get('/account/{id}/edit', [AccountController::class, 'edit'])->name('account.edit');
+    Route::patch('/account/{id}', [AccountController::class, 'update'])->name('account.update');
+    Route::delete('/account/{id}', [AccountController::class, 'destroy'])->name('account.destroy');
+});
