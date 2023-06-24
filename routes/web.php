@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,7 @@ Route::post('/password/reset', [PasswordController::class, 'reset'])->name('pass
 Route::middleware(['auth'])->group(function () {
     // 首頁
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    // 帳戶管理
+    Route::get('/account/create', [AccountController::class, 'create'])->name('account.create');
+    Route::post('/account', [AccountController::class, 'store'])->name('account.store');
 });

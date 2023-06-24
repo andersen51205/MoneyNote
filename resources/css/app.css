@@ -4,6 +4,7 @@ body {
 
 .content-page {
     margin-top: 1rem;
+    margin-bottom: 2rem;
     padding: 1.25rem 2.5rem !important;
     border-radius: 1.25rem;
     background-color: #ffffff;
@@ -58,4 +59,34 @@ body {
 
 .breadcrumbs .item.active {
     background: #f0f0f0;
+}
+
+/* 卡片表單 */
+.custom-card {
+    background-color: #ffffff;
+    border: 1px solid #C0C0C0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+.custom-card .header {
+    padding: 0.75rem;
+    background-color: #D6EAF8;
+    border-bottom: 1px solid #C0C0C0;
+}
+
+.custom-card .header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 0;
+}
+
+.custom-card .content {
+    padding: 1rem 1.5rem;
+}
+
+.custom-card .content label,
+.custom-card .content input,
+.custom-card .content select,
+.custom-card .content textarea {
+    font-size: 1.1rem;
 }
