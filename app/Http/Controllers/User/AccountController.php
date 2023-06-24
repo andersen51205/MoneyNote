@@ -14,7 +14,13 @@ class AccountController extends Controller
      */
     public function index()
     {
-        // 
+        // 取得資料
+        $accounts = Account::where('user_id', Auth::user()->id)
+            ->get();
+        // Response
+        return view('user.account.index', [
+            'accounts' => $accounts,
+        ]);
     }
 
     /**
