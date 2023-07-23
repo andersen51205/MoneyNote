@@ -72,7 +72,8 @@
                                     <a class="btn btn-outline-primary m-1 detail" href="">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </a>
-                                    <a class="btn btn-outline-success m-1 edit" href="">
+                                    <a class="btn btn-outline-success m-1"
+                                            href="{{ route('category.edit', $category->id) }}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <button type="button" class="btn btn-outline-danger m-1 delete">
