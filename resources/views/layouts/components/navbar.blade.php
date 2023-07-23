@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('account.index') }}">帳戶管理</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('category.index') }}">類別管理</a>
+                </li>
             </ul>
             {{-- 右側選單 --}}
             <ul class="navbar-nav ms-auto">

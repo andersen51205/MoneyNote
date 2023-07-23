@@ -14,7 +14,25 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        // 取得資料
+        $types = [
+            1 => '支出',
+            2 => '收入',
+        ];
+        $expenseCategories = Category::where('user_id', Auth::user()->id)
+            ->where('type', 1)
+            ->get();
+        $incomeCategories = Category::where('user_id', Auth::user()->id)
+            ->where('type', 2)
+            ->get();
+        // Response
+        return view('user.category.index', [
+            'categories' => [
+                1 => $expenseCategories,
+                2 => $incomeCategories,
+            ],
+            'types' => $types,
+        ]);
     }
 
     /**

@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/account/{id}', [AccountController::class, 'update'])->name('account.update');
     Route::delete('/account/{id}', [AccountController::class, 'destroy'])->name('account.destroy');
     // 類別管理
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
 });
