@@ -76,7 +76,9 @@
                                             href="{{ route('category.edit', $category->id) }}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <button type="button" class="btn btn-outline-danger m-1 delete">
+                                    <button type="button" class="btn btn-outline-danger m-1"
+                                            data-id="{{ $category->id }}" data-name="{{ $category->name }}"
+                                            onclick="deleteCategory(this)">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </td>
@@ -95,4 +97,19 @@
 @endsection
 
 @section('script')
+<script>
+    function deleteCategory(el) {
+        const dataId = el.getAttribute('data-id');
+        const dataName = el.getAttribute('data-name');
+        if(dataId) {
+            UtilSwal.deleteSubmit(dataName, function () {
+                const route = "{{ route('category.destroy', 'ID') }}";
+                const method = 'DELETE';
+                let postData = {};
+                
+                UtilAjax.formSubmit(route.replace('ID', dataId), method, postData);
+            });
+        }
+    }
+</script>
 @endsection

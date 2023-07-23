@@ -142,9 +142,25 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        // 取得資料
+        $categoryData = Category::where('user_id', Auth::user()->id)
+            ->where('id', $id)
+            ->first();
+        // 檢查收支類別是否存在
+        if(!$categoryData) {
+            return response()->json([
+                'message' => '找不到類別，請重新操作一次',
+            ], 404);
+        }
+        // 刪除資料
+        $categoryData->delete();
+        // Response : 回傳204會使response為空，因此使用200
+        return response()->json([
+            'message' => '刪除成功',
+            'redirect' => route('category.index'),
+        ], 200);
     }
 
     /**
