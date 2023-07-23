@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    private $categoryRepo;
+
+    public function __construct(
+        CategoryRepository $categoryRepo
+    ) {
+        $this->categoryRepo = $categoryRepo;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -19,12 +27,8 @@ class CategoryController extends Controller
             1 => '支出',
             2 => '收入',
         ];
-        $expenseCategories = Category::where('user_id', Auth::user()->id)
-            ->where('type', 1)
-            ->get();
-        $incomeCategories = Category::where('user_id', Auth::user()->id)
-            ->where('type', 2)
-            ->get();
+        $expenseCategories = $this->categoryRepo->getExpenseCategory();
+        $incomeCategories = $this->categoryRepo->getIncomeCategory();
         // Response
         return view('user.category.index', [
             'categories' => [
@@ -67,7 +71,7 @@ class CategoryController extends Controller
             'hidden' => $validated['hidden'] ?? 0,
         ];
         // 建立資料
-        $result = Category::create($createData);
+        $result = $this->categoryRepo->createCategory($createData);
         // Response
         return response()->json([
             'message' => '新增成功',
@@ -93,9 +97,7 @@ class CategoryController extends Controller
             1 => '支出',
             2 => '收入',
         ];
-        $category = Category::where('user_id', Auth::user()->id)
-            ->where('id', $id)
-            ->first();
+        $category = $this->categoryRepo->getCategoryById($id);
         // 檢查資料是否存在
         if(!$category) {
             abort(404);
@@ -115,9 +117,7 @@ class CategoryController extends Controller
         // 表單驗證
         $validated = $request->validate($this->validationRules());
         // 取得資料
-        $categoryData = Category::where('user_id', Auth::user()->id)
-            ->where('id', $id)
-            ->first();
+        $categoryData = $this->categoryRepo->getCategoryById($id);
         // 檢查收支類別是否存在
         if(!$categoryData) {
             return response()->json([
@@ -131,7 +131,7 @@ class CategoryController extends Controller
             'hidden' => $validated['hidden'] ?? 0,
         ];
         // 更新資料
-        $result = $categoryData->update($updateData);
+        $result = $this->categoryRepo->updateCategoryById($id, $updateData);
         // Response
         return response()->json([
             'message' => '更新成功',
@@ -145,9 +145,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         // 取得資料
-        $categoryData = Category::where('user_id', Auth::user()->id)
-            ->where('id', $id)
-            ->first();
+        $categoryData = $this->categoryRepo->getCategoryById($id);
         // 檢查收支類別是否存在
         if(!$categoryData) {
             return response()->json([
@@ -155,7 +153,7 @@ class CategoryController extends Controller
             ], 404);
         }
         // 刪除資料
-        $categoryData->delete();
+        $result = $this->categoryRepo->deleteCategoryById($id);
         // Response : 回傳204會使response為空，因此使用200
         return response()->json([
             'message' => '刪除成功',
