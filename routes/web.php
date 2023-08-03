@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\CategoryController;
+use App\Http\Controllers\User\SubcategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
     Route::patch('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    // 子類別管理
+    Route::get('/category/{id}/subcategory/create', [SubcategoryController::class, 'create'])->name('subcategory.create');
+    Route::post('/category/{id}/subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
 });
