@@ -45,6 +45,17 @@ class CategoryRepository
     }
 
     /**
+     * 用parent_id取得使用者的子類別
+     */
+    public function getSubcategoryByParentId($parentId)
+    {
+        $categories = Category::where('user_id', Auth::user()->id)
+            ->where('parent_id', $parentId)
+            ->get();
+        return $categories;
+    }
+
+    /**
      * 建立收支類別
      */
     public function createCategory($data)

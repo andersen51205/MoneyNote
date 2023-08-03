@@ -82,9 +82,19 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        // 取得資料
+        $category = $this->categoryRepo->getCategoryById($id);
+        if(!$category) {
+            abort(404);
+        }
+        $subcategories = $this->categoryRepo->getSubcategoryByParentId($id);
+        // Response
+        return view('user.category.show', [
+            'category' => $category,
+            'subcategories' => $subcategories,
+        ]);
     }
 
     /**

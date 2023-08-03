@@ -69,7 +69,8 @@
                                     @endif
                                 </td>
                                 <td data-title="操作">
-                                    <a class="btn btn-outline-primary m-1 detail" href="">
+                                    <a class="btn btn-outline-primary m-1"
+                                            href="{{ route('category.show', $category->id) }}">
                                         <i class="fa-solid fa-magnifying-glass"></i>
                                     </a>
                                     <a class="btn btn-outline-success m-1"
