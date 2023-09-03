@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\AccountController;
+use App\Http\Controllers\User\CategoryController;
+use App\Http\Controllers\User\SubcategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +48,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account/{id}/edit', [AccountController::class, 'edit'])->name('account.edit');
     Route::patch('/account/{id}', [AccountController::class, 'update'])->name('account.update');
     Route::delete('/account/{id}', [AccountController::class, 'destroy'])->name('account.destroy');
+    // 類別管理
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::patch('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    // 子類別管理
+    Route::get('/category/{parentId}', [SubcategoryController::class, 'index'])->name('subcategory.index');
+    Route::get('/category/{parentId}/subcategory/create', [SubcategoryController::class, 'create'])->name('subcategory.create');
+    Route::post('/category/{parentId}/subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
+    Route::get('/category/{parentId}/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('subcategory.edit');
+    Route::patch('/category/{parentId}/subcategory/{id}', [SubcategoryController::class, 'update'])->name('subcategory.update');
+    Route::delete('/category/{parentId}/subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
 });
