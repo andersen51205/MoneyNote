@@ -6,14 +6,14 @@
     @include('layouts.components.breadcrumb', [
         'breadcrumbs' => [
             ['name' => '類別管理', 'url' => route('category.index')],
-            ['name' => $category->name]
+            ['name' => $parentCategory->name]
         ]
     ])
     {{-- 標題 --}}
-    <h1>{{ $category->name }}</h1>
+    <h1>{{ $parentCategory->name }}</h1>
     {{-- 內容 --}}
     <div class="d-flex justify-content-end my-3">
-        <a class="btn btn-outline-primary" href="{{ route('subcategory.create', $category->id) }}">
+        <a class="btn btn-outline-primary" href="{{ route('subcategory.create', $parentCategory->id) }}">
             <i class="fa-solid fa-plus"></i> 新增
         </a>
     </div>
@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($subcategories as $i => $category)
+                @forelse ($categories as $i => $category)
                     <tr>
                         <td data-title="#">{{ $i+1 }}</td>
                         <td data-title="名稱">{{ $category->name }}</td>

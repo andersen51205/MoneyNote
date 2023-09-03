@@ -20,9 +20,19 @@ class SubcategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($parentId)
     {
-        //
+        // 取得資料
+        $parentCategory = $this->categoryRepo->getCategoryById($parentId);
+        if(!$parentCategory) {
+            abort(404);
+        }
+        $categories = $this->categoryRepo->getSubcategoryByParentId($parentId);
+        // Response
+        return view('user.subcategory.index', [
+            'parentCategory' => $parentCategory,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -67,7 +77,7 @@ class SubcategoryController extends Controller
         // Response
         return response()->json([
             'message' => '新增成功',
-            'redirect' => route('category.show', $parentCategory->id),
+            'redirect' => route('subcategory.index', $parentCategory->id),
         ], 201);
     }
 

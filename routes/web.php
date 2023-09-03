@@ -52,11 +52,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
-    Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
     Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
     Route::patch('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     // 子類別管理
     Route::get('/category/{id}/subcategory/create', [SubcategoryController::class, 'create'])->name('subcategory.create');
     Route::post('/category/{id}/subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
+    Route::get('/category/{parentId}', [SubcategoryController::class, 'index'])->name('subcategory.index');
 });

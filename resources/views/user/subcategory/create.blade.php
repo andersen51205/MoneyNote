@@ -6,7 +6,7 @@
     @include('layouts.components.breadcrumb', [
         'breadcrumbs' => [
             ['name' => '類別管理', 'url' => route('category.index')],
-            ['name' => $parentCategory->name, 'url' => route('category.show', $parentCategory->id)],
+            ['name' => $parentCategory->name, 'url' => route('subcategory.index', $parentCategory->id)],
             ['name' => '新增子類別']
         ]
     ])
