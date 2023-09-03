@@ -147,9 +147,28 @@ class SubcategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($parentId, $id)
     {
-        //
+        // 取得資料
+        $category = $this->categoryRepo->getCategoryById($id);
+        // 檢查收支類別是否存在
+        if(!$category) {
+            return response()->json([
+                'message' => '找不到類別，請重新載入後，再操作一次',
+            ], 404);
+        }
+        if($category->parent_id !== intval($parentId)) {
+            return response()->json([
+                'message' => '類別有誤，請重新載入後，再操作一次',
+            ], 404);
+        }
+        // 刪除資料
+        $result = $this->categoryRepo->deleteCategoryById($id);
+        // Response : 回傳204會使response為空，因此使用200
+        return response()->json([
+            'message' => '刪除成功',
+            'redirect' => route('subcategory.index', $category->parent_id),
+        ], 200);
     }
 
     /**

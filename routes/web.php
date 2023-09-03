@@ -61,4 +61,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/category/{parentId}/subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
     Route::get('/category/{parentId}/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('subcategory.edit');
     Route::patch('/category/{parentId}/subcategory/{id}', [SubcategoryController::class, 'update'])->name('subcategory.update');
+    Route::delete('/category/{parentId}/subcategory/{id}', [SubcategoryController::class, 'destroy'])->name('subcategory.destroy');
 });

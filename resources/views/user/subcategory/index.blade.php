@@ -49,7 +49,10 @@
                             <a class="btn btn-outline-success m-1" href="{{ route('subcategory.edit', [$parentCategory->id, $category->id] ) }}">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <button type="button" class="btn btn-outline-danger m-1">
+                            <button type="button" class="btn btn-outline-danger m-1"
+                                    data-parent-id="{{ $parentCategory->id }}"
+                                    data-id="{{ $category->id }}" data-name="{{ $category->name }}"
+                                    onclick="deleteCategory(this)">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
@@ -66,4 +69,21 @@
 @endsection
 
 @section('script')
+<script>
+    function deleteCategory(el) {
+        const dataParentId = el.getAttribute('data-parent-id');
+        const dataId = el.getAttribute('data-id');
+        const dataName = el.getAttribute('data-name');
+        if(dataParentId && dataId) {
+            UtilSwal.deleteSubmit(dataName, function () {
+                const route = "{{ route('subcategory.destroy', ['PARENT_ID', 'ID']) }}";
+                const method = 'DELETE';
+                let url = route.replace('PARENT_ID', dataParentId).replace('ID', dataId);
+                let postData = {};
+                
+                UtilAjax.formSubmit(url, method, postData);
+            });
+        }
+    }
+</script>
 @endsection
