@@ -92,17 +92,56 @@ class SubcategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($parentId, $id)
     {
-        //
+        // 取得資料
+        $parentCategory = $this->categoryRepo->getCategoryById($parentId);
+        if(!$parentCategory) {
+            abort(404);
+        }
+        $category = $this->categoryRepo->getCategoryById($id);
+        if(!$category) {
+            abort(404);
+        }
+        // Response
+        return view('user.subcategory.edit', [
+            'parentCategory' => $parentCategory,
+            'category' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update($parentId, $id, Request $request)
     {
-        //
+        // 表單驗證
+        $validated = $request->validate($this->validationRules());
+        // 取得資料
+        $category = $this->categoryRepo->getCategoryById($id);
+        if(!$category) {
+            return response()->json([
+                'message' => '找不到子類別，請重新載入後，再操作一次',
+            ], 404);
+        }
+        if($category->parent_id !== intval($parentId)) {
+            return response()->json([
+                'message' => '類別有誤，請重新載入後，再操作一次',
+            ], 404);
+        }
+        // 資料處理
+        $updateData = [
+            'name' => $validated['name'],
+            'remark' => $validated['remark'],
+            'hidden' => $validated['hidden'] ?? 0,
+        ];
+        // 更新資料
+        $result = $this->categoryRepo->updateCategoryById($category->id, $updateData);
+        // Response
+        return response()->json([
+            'message' => '更新成功',
+            'redirect' => route('subcategory.index', $category->parent_id),
+        ], 201);
     }
 
     /**

@@ -46,7 +46,7 @@
                             @endif
                         </td>
                         <td data-title="操作">
-                            <a class="btn btn-outline-success m-1" href="">
+                            <a class="btn btn-outline-success m-1" href="{{ route('subcategory.edit', [$parentCategory->id, $category->id] ) }}">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                             <button type="button" class="btn btn-outline-danger m-1">
