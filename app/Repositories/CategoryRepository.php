@@ -17,6 +17,7 @@ class CategoryRepository
     public function getExpenseCategory()
     {
         $categories = Category::where('user_id', Auth::user()->id)
+            ->whereNull('parent_id')
             ->where('type', 1)
             ->get();
         return $categories;
@@ -28,6 +29,7 @@ class CategoryRepository
     public function getIncomeCategory()
     {
         $categories = Category::where('user_id', Auth::user()->id)
+            ->whereNull('parent_id')
             ->where('type', 2)
             ->get();
         return $categories;
