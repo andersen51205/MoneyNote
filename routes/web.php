@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
     // 子類別管理
-    Route::get('/category/{id}/subcategory/create', [SubcategoryController::class, 'create'])->name('subcategory.create');
-    Route::post('/category/{id}/subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
     Route::get('/category/{parentId}', [SubcategoryController::class, 'index'])->name('subcategory.index');
+    Route::get('/category/{parentId}/subcategory/create', [SubcategoryController::class, 'create'])->name('subcategory.create');
+    Route::post('/category/{parentId}/subcategory', [SubcategoryController::class, 'store'])->name('subcategory.store');
 });
